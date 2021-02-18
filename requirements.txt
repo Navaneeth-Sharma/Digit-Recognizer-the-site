@@ -1,0 +1,15 @@
+Flask==1.1.2
+gunicorn==19.9.0
+itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
+Werkzeug==0.15.5
+numpy>=1.18.4
+scipy>=0.15.1
+tensorflow==1.5.0
+matplotlib>=3.2.0
+pandas>=0.19
+opencv-python==4.5.1.48
+scipy>=1.4.1
+Keras>=2.0.9
+librosa>=0.7.2
