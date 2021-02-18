@@ -12,4 +12,3 @@ opencv-python==4.5.1.48
 scipy>=1.4.1
 Keras>=2.0.9
 librosa>=0.7.2
-sndfile>=0.2.0
