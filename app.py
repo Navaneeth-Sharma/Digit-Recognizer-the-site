@@ -3,10 +3,10 @@ import numpy as np
 import os,shutil
 import librosa
 import datetime
-from scipy.io.wavfile import write 
+from scipy.io.wavfile import write
+import sounddevice as sd
 import keras
 from keras import backend as K
-
 
 app = Flask(__name__)
 @app.route("/",methods=['GET','POST'])
@@ -38,16 +38,26 @@ def dataset():
     if request.method == 'POST':
         # if request.form.validate_on_submit():
         if 'Record' in request.form:
-            freq = 44100
+            freq = 22500
             duration = 3
             recording = sd.rec(int(duration * freq),  
                    samplerate=freq, channels=2)
             sd.wait() 
-            
-            t1 = datetime.datetime.now()
-            write('data/'+str(t1)+'.wav', freq, recording) 
 
-            two = wav2mfcc('data/'+str(t1)+'.wav')
+            print(recording)
+            try:
+                os.mkdir('data/')
+            except:
+                pass
+
+            write('data/hi1.wav',freq,np.asarray(recording,dtype=np.int16))
+            
+            t1 = datetime.datetime.now() 
+
+            write('data/'+str(t1)+'.wav', freq, recording) 
+            print('------------------------------------------------------------------------------')
+
+            two = wav2mfcc('hi.wav')
             print(two.shape)
 
             model = keras.models.load_model('SRD')
@@ -55,7 +65,7 @@ def dataset():
             
             K.clear_session()
             color = "text-success"
-            messege = "Model predicts the spoken digit is "+str(out[0])+" !!!"
+            messege = "Model predicts the spoken "#digit is "+str(out[0])+" !!!"
             
             return render_template('index.html',messege = messege, color=color)
 
@@ -63,6 +73,11 @@ def dataset():
 
             
         if request.files:
+
+            try:
+                os.mkdir('data/')
+            except:
+                pass
             
             audio = request.files['audio']
 
