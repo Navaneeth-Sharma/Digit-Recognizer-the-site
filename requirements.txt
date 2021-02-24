@@ -13,3 +13,6 @@ scipy>=1.4.1
 Keras>=2.0.9
 librosa>=0.7.2
 sounddevice>=0.2.0
+urllib3==1.25.9
+Werkzeug==1.0.1
+uwsgi
