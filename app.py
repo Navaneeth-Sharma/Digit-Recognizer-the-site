@@ -8,6 +8,7 @@ import sounddevice as sd
 import keras
 from keras import backend as K
 
+
 app = Flask(__name__)
 @app.route("/",methods=['GET','POST'])
 def Index():
@@ -50,22 +51,22 @@ def dataset():
             except:
                 pass
 
-            write('data/hi1.wav',freq,np.asarray(recording,dtype=np.int16))
+            # write('data/hi1.wav',freq,np.asarray(recording,dtype=np.int16))
             
             t1 = datetime.datetime.now() 
 
             write('data/'+str(t1)+'.wav', freq, recording) 
             print('------------------------------------------------------------------------------')
 
-            two = wav2mfcc('hi.wav')
-            print(two.shape)
+            two = wav2mfcc('data/'+str(t1)+'.wav')
+            # print(two.shape)
 
             model = keras.models.load_model('SRD')
             out = model.predict_classes(np.array([np.asarray(two).reshape(20,8,1),]))
             
             K.clear_session()
             color = "text-success"
-            messege = "Model predicts the spoken "#digit is "+str(out[0])+" !!!"
+            messege = "Model predicts the spoken digit is "+str(out[0])+" !!!"
             
             return render_template('index.html',messege = messege, color=color)
 
