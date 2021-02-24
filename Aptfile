@@ -1,4 +1,4 @@
 libsndfile1
 libsndfile-dev
 ffmpeg
-PortAudio
+libportaudio2
