@@ -2,3 +2,4 @@ libsndfile1
 libsndfile-dev
 ffmpeg
 libportaudio2
+libasound-dev
