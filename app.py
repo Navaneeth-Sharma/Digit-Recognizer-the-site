@@ -9,7 +9,11 @@ import datetime
 # from keras import backend as K
 
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='web/static',
+            template_folder='web/templates',
+           data_folder='web/data')
 @app.route("/",methods=['GET','POST'])
 def Index():
     return render_template("index.html")
