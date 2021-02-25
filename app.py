@@ -37,66 +37,72 @@ def wav2mfcc(file_path, max_len=8):
 @app.route('/dataset', methods = ['GET','POST'])
 def dataset():
     if request.method == 'POST':
+        
+        color = "text-success"
+        messege = "Model predicts the spoken digit is"
+
+        return render_template('index.html',messege = messege, color=color)
+        
         # if request.form.validate_on_submit():
-        if 'Record' in request.form:
-            freq = 22500
-            duration = 3
-            recording = sd.rec(int(duration * freq),  
-                   samplerate=freq, channels=2)
-            sd.wait() 
+#         if 'Record' in request.form:
+#             freq = 22500
+#             duration = 3
+#             recording = sd.rec(int(duration * freq),  
+#                    samplerate=freq, channels=2)
+#             sd.wait() 
 
-            print(recording)
-            try:
-                os.mkdir('data/')
-            except:
-                pass
+#             print(recording)
+#             try:
+#                 os.mkdir('data/')
+#             except:
+#                 pass
 
-            # write('data/hi1.wav',freq,np.asarray(recording,dtype=np.int16))
+#             # write('data/hi1.wav',freq,np.asarray(recording,dtype=np.int16))
             
-            t1 = datetime.datetime.now() 
+#             t1 = datetime.datetime.now() 
 
-            write('data/'+str(t1)+'.wav', freq, recording) 
-            print('------------------------------------------------------------------------------')
+#             write('data/'+str(t1)+'.wav', freq, recording) 
+#             print('------------------------------------------------------------------------------')
 
-            two = wav2mfcc('data/'+str(t1)+'.wav')
-            # print(two.shape)
+#             two = wav2mfcc('data/'+str(t1)+'.wav')
+#             # print(two.shape)
 
-            model = keras.models.load_model('SRD')
-            out = model.predict_classes(np.array([np.asarray(two).reshape(20,8,1),]))
+#             model = keras.models.load_model('SRD')
+#             out = model.predict_classes(np.array([np.asarray(two).reshape(20,8,1),]))
             
-            K.clear_session()
-            color = "text-success"
-            messege = "Model predicts the spoken digit is "+str(out[0])+" !!!"
+#             K.clear_session()
+#             color = "text-success"
+#             messege = "Model predicts the spoken digit is "+str(out[0])+" !!!"
             
-            return render_template('index.html',messege = messege, color=color)
+#             return render_template('index.html',messege = messege, color=color)
 
         
 
             
-        if request.files:
+#         if request.files:
 
-            try:
-                os.mkdir('data/')
-            except:
-                pass
+#             try:
+#                 os.mkdir('data/')
+#             except:
+#                 pass
             
-            audio = request.files['audio']
+#             audio = request.files['audio']
 
-            t1 = datetime.datetime.now()
-            audio.save('data/'+str(t1)+'.wav')
+#             t1 = datetime.datetime.now()
+#             audio.save('data/'+str(t1)+'.wav')
 
 
-            two = wav2mfcc('data/'+str(t1)+'.wav')
-            print(two.shape)
+#             two = wav2mfcc('data/'+str(t1)+'.wav')
+#             print(two.shape)
 
-            model = keras.models.load_model('SRD')
-            out = model.predict_classes(np.array([np.asarray(two).reshape(20,8,1),]))
+#             model = keras.models.load_model('SRD')
+#             out = model.predict_classes(np.array([np.asarray(two).reshape(20,8,1),]))
             
-            K.clear_session()
-            color = "text-success"
-            messege = "Model predicts the spoken digit is "+str(out[0])+ " !!!"
+#             K.clear_session()
+#             color = "text-success"
+#             messege = "Model predicts the spoken digit is "+str(out[0])+ " !!!"
             
-            return render_template('index.html',messege = messege, color=color)
+#             return render_template('index.html',messege = messege, color=color)
             
         # try:
         #     os.mkdir('data/')
