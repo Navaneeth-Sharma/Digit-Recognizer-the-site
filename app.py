@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request,redirect
-# import numpy as np 
+import numpy as np 
 import os
-# import librosa
+import librosa
 import datetime
 # from scipy.io.wavfile import write
 # import sounddevice as sd
-# import keras
-# from keras import backend as K
+import keras
+from keras import backend as K
 
 
 app = Flask(__name__)
@@ -14,24 +14,24 @@ app = Flask(__name__)
 def Index():
     return render_template("index.html")
 
-# def wav2mfcc(file_path, max_len=8):
-#     wave, sr = librosa.load(file_path, mono=True, sr=16000)
-#     amplitude = []
-#     for i in wave:
-#         if abs(i)>0.009:
-#             amplitude.append(i)
-#     mfcc = librosa.feature.mfcc(np.asarray(amplitude))
+def wav2mfcc(file_path, max_len=8):
+    wave, sr = librosa.load(file_path, mono=True, sr=16000)
+    amplitude = []
+    for i in wave:
+        if abs(i)>0.009:
+            amplitude.append(i)
+    mfcc = librosa.feature.mfcc(np.asarray(amplitude))
 
-#     # If maximum length exceeds mfcc lengths then pad the remaining ones
-#     if (max_len > mfcc.shape[1]):
-#         pad_width = max_len - mfcc.shape[1]
-#         mfcc = np.pad(mfcc, pad_width=((0, 0), (0, pad_width)), mode='constant')
+    # If maximum length exceeds mfcc lengths then pad the remaining ones
+    if (max_len > mfcc.shape[1]):
+        pad_width = max_len - mfcc.shape[1]
+        mfcc = np.pad(mfcc, pad_width=((0, 0), (0, pad_width)), mode='constant')
 
-#     # Else cutoff the remaining parts
-#     else:
-#         mfcc = mfcc[:, :max_len]
+    # Else cutoff the remaining parts
+    else:
+        mfcc = mfcc[:, :max_len]
     
-#     return mfcc
+    return mfcc
 
 
 @app.route('/dataset', methods = ['GET','POST'])
@@ -99,20 +99,20 @@ def dataset():
             messege+=" and also saved"
             
             
-            return render_template('index.html',messege = messege, color=color)
-
-
-#             two = wav2mfcc('data/'+str(t1)+'.wav')
-#             print(two.shape)
-
-#             model = keras.models.load_model('SRD')
-#             out = model.predict_classes(np.array([np.asarray(two).reshape(20,8,1),]))
-            
-#             K.clear_session()
-#             color = "text-success"
-#             messege = "Model predicts the spoken digit is "+str(out[0])+ " !!!"
-            
 #             return render_template('index.html',messege = messege, color=color)
+
+
+            two = wav2mfcc('data/'+str(t1)+'.wav')
+            print(two.shape)
+
+            model = keras.models.load_model('SRD')
+            out = model.predict_classes(np.array([np.asarray(two).reshape(20,8,1),]))
+            
+            K.clear_session()
+            color = "text-success"
+            messege = "Model predicts the spoken digit is "+str(out[0])+ " !!!"
+            
+            return render_template('index.html',messege = messege, color=color)
             
         # try:
         #     os.mkdir('data/')
