@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request,redirect
 # import numpy as np 
-# import os,shutil
+import os,shutill
 # import librosa
-# import datetime
+import datetime
 # from scipy.io.wavfile import write
 # import sounddevice as sd
 # import keras
@@ -14,36 +14,36 @@ app = Flask(__name__)
 def Index():
     return render_template("index.html")
 
-# def wav2mfcc(file_path, max_len=8):
-#     wave, sr = librosa.load(file_path, mono=True, sr=16000)
-#     amplitude = []
-#     for i in wave:
-#         if abs(i)>0.009:
-#             amplitude.append(i)
-#     mfcc = librosa.feature.mfcc(np.asarray(amplitude))
+def wav2mfcc(file_path, max_len=8):
+    wave, sr = librosa.load(file_path, mono=True, sr=16000)
+    amplitude = []
+    for i in wave:
+        if abs(i)>0.009:
+            amplitude.append(i)
+    mfcc = librosa.feature.mfcc(np.asarray(amplitude))
 
-#     # If maximum length exceeds mfcc lengths then pad the remaining ones
-#     if (max_len > mfcc.shape[1]):
-#         pad_width = max_len - mfcc.shape[1]
-#         mfcc = np.pad(mfcc, pad_width=((0, 0), (0, pad_width)), mode='constant')
+    # If maximum length exceeds mfcc lengths then pad the remaining ones
+    if (max_len > mfcc.shape[1]):
+        pad_width = max_len - mfcc.shape[1]
+        mfcc = np.pad(mfcc, pad_width=((0, 0), (0, pad_width)), mode='constant')
 
-#     # Else cutoff the remaining parts
-#     else:
-#         mfcc = mfcc[:, :max_len]
+    # Else cutoff the remaining parts
+    else:
+        mfcc = mfcc[:, :max_len]
     
-#     return mfcc
+    return mfcc
 
 
 @app.route('/dataset', methods = ['GET','POST'])
 def dataset():
     if request.method == 'POST':
         
-        color = "text-success"
-        messege = "Model predicts the spoken digit is"
+#         color = "text-success"
+#         messege = "Model predicts the spoken digit is"
 
-        return render_template('index.html',messege = messege, color=color)
+#         return render_template('index.html',messege = messege, color=color)
         
-        # if request.form.validate_on_submit():
+#         if request.form.validate_on_submit():
 #         if 'Record' in request.form:
 #             freq = 22500
 #             duration = 3
@@ -79,17 +79,27 @@ def dataset():
         
 
             
-#         if request.files:
+        if request.files:
 
-#             try:
-#                 os.mkdir('data/')
-#             except:
-#                 pass
+            try:
+                os.mkdir('data/')
+                
+                color = "text-success"
+                messege = "data folder created successfully"
+
+#             
+            except:
+                pass
             
-#             audio = request.files['audio']
+            audio = request.files['audio']
 
-#             t1 = datetime.datetime.now()
-#             audio.save('data/'+str(t1)+'.wav')
+            t1 = datetime.datetime.now()
+            audio.save('data/'+str(t1)+'.wav')
+            
+            messege+=" and also saved"
+            
+            
+            return render_template('index.html',messege = messege, color=color)
 
 
 #             two = wav2mfcc('data/'+str(t1)+'.wav')
