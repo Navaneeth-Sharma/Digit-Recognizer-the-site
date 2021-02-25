@@ -12,8 +12,8 @@ import datetime
 app = Flask(__name__,
             static_url_path='', 
             static_folder='web/static',
-            template_folder='web/templates',
-           data_folder='web/data')
+            template_folder='web/templates'
+           )
 @app.route("/",methods=['GET','POST'])
 def Index():
     return render_template("index.html")
